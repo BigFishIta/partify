@@ -1,0 +1,24 @@
+:root {
+  /* brand palette (HSL) */
+  --color-primary-h: 222;
+  --color-primary-s: 89%;
+  --color-primary-l: 55%;
+
+  --color-secondary-h: 143;
+  --color-secondary-s: 80%;
+  --color-secondary-l: 40%;
+
+  /* semantic */
+  --bg: hsl(0 0% 100%);
+  --fg: hsl(222 47% 11%);
+
+  /* radii, font */
+  --radius: 0.75rem;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+[data-theme='dark'] {
+  --bg: hsl(222 47% 11%);
+  --fg: hsl(0 0% 100%);
+  --color-primary-l: 60%;
+}
