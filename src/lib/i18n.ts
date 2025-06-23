@@ -8,6 +8,10 @@ export const translations = {
     // Auth
     'auth.signin': 'Sign in',
     'auth.signup': 'Create account',
+    'auth.welcomeBack': 'Welcome Back',
+    'auth.welcomeBackDescription': 'Welcome Back, Please enter Your details',
+    'auth.createAccountTitle': 'Create Account',
+    'auth.createAccountDescription': 'Join us today, Please enter your details',
     'auth.email': 'Email',
     'auth.password': 'Password',
     'auth.confirmPassword': 'Confirm Password',
@@ -64,6 +68,10 @@ export const translations = {
     // Auth
     'auth.signin': 'Accedi',
     'auth.signup': 'Crea account',
+    'auth.welcomeBack': 'Bentornato',
+    'auth.welcomeBackDescription': 'Bentornato, inserisci i tuoi dati',
+    'auth.createAccountTitle': 'Crea Account',
+    'auth.createAccountDescription': 'Unisciti a noi oggi, inserisci i tuoi dati',
     'auth.email': 'Email',
     'auth.password': 'Password',
     'auth.confirmPassword': 'Conferma Password',

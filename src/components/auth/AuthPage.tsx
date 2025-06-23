@@ -63,12 +63,12 @@ export function AuthPage() {
           {/* Welcome section */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">
-              {mode === "login" ? "Welcome Back" : "Create Account"}
+              {mode === "login" ? t('auth.welcomeBack') : t('auth.createAccountTitle')}
             </h1>
             <p className="text-muted-foreground">
               {mode === "login" 
-                ? "Welcome Back, Please enter Your details" 
-                : "Join us today, Please enter your details"
+                ? t('auth.welcomeBackDescription')
+                : t('auth.createAccountDescription')
               }
             </p>
           </div>
