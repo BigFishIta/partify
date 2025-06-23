@@ -23,9 +23,9 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = params;
+  const { locale } = await params;
   unstable_setRequestLocale(locale);
   
   const messages = (await import(`@/i18n/${locale}/common.json`)).default;
