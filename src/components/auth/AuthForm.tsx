@@ -85,17 +85,17 @@ export function AuthForm({ mode }: AuthFormProps) {
               <SocialButton provider="google" />
               <SocialButton provider="facebook" />
             </div>
+
+            <div className="text-center">
+              <Link 
+                href={linkHref}
+                className="text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
+              >
+                {linkText}
+              </Link>
+            </div>
           </CardContent>
         </Card>
-        
-        <div className="mt-6 text-center">
-          <Link 
-            href={linkHref}
-            className="text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
-          >
-            {linkText}
-          </Link>
-        </div>
       </div>
     </div>
   )
