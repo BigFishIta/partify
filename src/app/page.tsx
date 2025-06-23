@@ -21,10 +21,7 @@ export default function Home() {
           </CardHeader>
           <CardContent className="space-y-4">
             <Button asChild className="w-full">
-              <Link href="/login">Sign In</Link>
-            </Button>
-            <Button asChild variant="outline" className="w-full">
-              <Link href="/signup">Create Account</Link>
+              <Link href="/auth">Get Started</Link>
             </Button>
           </CardContent>
         </Card>
