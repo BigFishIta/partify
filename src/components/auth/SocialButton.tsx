@@ -47,17 +47,17 @@ export function SocialButton({ provider, className }: SocialButtonProps) {
     <Button
       type="button"
       variant="outline"
-      className={cn("w-full", className)}
+      size="icon"
+      className={cn("rounded-full w-12 h-12", className)}
       onClick={handleSocialAuth}
       disabled={isLoading}
       aria-label={`Sign in with ${label}`}
     >
       {isLoading ? (
-        <Loader2 className="h-4 w-4 animate-spin" />
+        <Loader2 className="h-5 w-5 animate-spin" />
       ) : (
-        <Icon className="h-4 w-4" />
+        <Icon className="h-5 w-5" />
       )}
-      {label}
     </Button>
   )
 }
