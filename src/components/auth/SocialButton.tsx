@@ -4,9 +4,11 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useTranslation } from "@/contexts/LocaleContext"
 
 interface SocialButtonProps {
   provider: "google" | "facebook"
+  variant?: "primary" | "icon"
   className?: string
 }
 
@@ -26,8 +28,9 @@ const FacebookIcon = () => (
   </svg>
 )
 
-export function SocialButton({ provider, className }: SocialButtonProps) {
+export function SocialButton({ provider, variant = "icon", className }: SocialButtonProps) {
   const [isLoading, setIsLoading] = useState(false)
+  const { t } = useTranslation()
 
   const handleSocialAuth = async () => {
     setIsLoading(true)
@@ -56,6 +59,34 @@ export function SocialButton({ provider, className }: SocialButtonProps) {
   }
 
   const Icon = provider === "google" ? GoogleIcon : FacebookIcon
+  const providerName = provider.charAt(0).toUpperCase() + provider.slice(1)
+
+  if (variant === "primary") {
+    return (
+      <Button
+        type="button"
+        variant="outline"
+        onClick={handleSocialAuth}
+        disabled={isLoading}
+        className={cn(
+          "w-full h-12 text-base font-medium border-2 hover:scale-[1.02] transition-all duration-200",
+          provider === "google" && "hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950",
+          provider === "facebook" && "hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950",
+          className
+        )}
+        aria-label={t('auth.signinWith', { provider: providerName })}
+      >
+        {isLoading ? (
+          <Loader2 className="h-5 w-5 animate-spin" />
+        ) : (
+          <>
+            <Icon />
+            <span className="ml-2">{providerName}</span>
+          </>
+        )}
+      </Button>
+    )
+  }
 
   return (
     <Button
@@ -65,7 +96,7 @@ export function SocialButton({ provider, className }: SocialButtonProps) {
       className={cn("w-12 h-12 rounded-full border-2 hover:scale-105 transition-transform", className)}
       onClick={handleSocialAuth}
       disabled={isLoading}
-      aria-label={`Sign in with ${provider}`}
+      aria-label={t('auth.signinWith', { provider: providerName })}
     >
       {isLoading ? (
         <Loader2 className="h-5 w-5 animate-spin" />

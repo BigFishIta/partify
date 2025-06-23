@@ -7,10 +7,13 @@ import { SocialButton } from "./SocialButton"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { LocaleSelector } from "@/components/LocaleSelector"
 import { useTranslation } from "@/contexts/LocaleContext"
+import { Button } from "@/components/ui/button"
+import { ChevronDown, ChevronUp } from "lucide-react"
 
 export function AuthPage() {
   const [mode, setMode] = useState<"login" | "signup">("login")
   const [serverError, setServerError] = useState<string>("")
+  const [showEmailForm, setShowEmailForm] = useState(false)
   const { t } = useTranslation()
 
   const handleSubmit = async (data: any) => {
@@ -74,7 +77,7 @@ export function AuthPage() {
           </div>
 
           {/* Toggle buttons */}
-          <div className="flex bg-muted rounded-lg p-1 mb-6">
+          <div className="flex bg-muted rounded-lg p-1 mb-8">
             <button
               onClick={() => setMode("login")}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
@@ -97,29 +100,40 @@ export function AuthPage() {
             </button>
           </div>
 
-          {/* Form */}
-          <div className="space-y-6">
-            <EmailPasswordForm
-              mode={mode}
-              onSubmit={handleSubmit}
-              serverError={serverError}
-            />
-            
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-3 text-muted-foreground">
-                  {t('auth.continueWith')}
-                </span>
-              </div>
+          {/* Primary Social Login */}
+          <div className="space-y-4 mb-6">
+            <div className="grid grid-cols-2 gap-4">
+              <SocialButton provider="google" variant="primary" />
+              <SocialButton provider="facebook" variant="primary" />
             </div>
+          </div>
 
-            <div className="flex justify-center gap-4">
-              <SocialButton provider="google" />
-              <SocialButton provider="facebook" />
-            </div>
+          {/* Email/Password Toggle */}
+          <div className="space-y-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setShowEmailForm(!showEmailForm)}
+              className="w-full h-12 text-base font-medium justify-between"
+            >
+              <span>{t('auth.continueWithEmail')}</span>
+              {showEmailForm ? (
+                <ChevronUp className="h-4 w-4" />
+              ) : (
+                <ChevronDown className="h-4 w-4" />
+              )}
+            </Button>
+
+            {/* Collapsible Email Form */}
+            {showEmailForm && (
+              <div className="space-y-4 pt-2 border-t">
+                <EmailPasswordForm
+                  mode={mode}
+                  onSubmit={handleSubmit}
+                  serverError={serverError}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
