@@ -16,7 +16,35 @@ interface EmailDialogProps {
 
 export function EmailDialog({ isOpen, onClose, mode, onSubmit, serverError }: EmailDialogProps) {
   const { t } = useTranslation()
+  const [isVisible, setIsVisible] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
+
+  // Handle dialog opening and closing
+  useEffect(() => {
+    if (isOpen) {
+      // Show dialog immediately
+      setIsVisible(true)
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden'
+      
+      // Trigger animation after a small delay to ensure DOM is ready
+      const timer = setTimeout(() => {
+        setIsAnimating(true)
+      }, 10)
+      
+      return () => clearTimeout(timer)
+    } else {
+      // Start closing animation
+      setIsAnimating(false)
+      // Hide dialog after animation completes
+      const timer = setTimeout(() => {
+        setIsVisible(false)
+        document.body.style.overflow = 'unset'
+      }, 300)
+      
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen])
 
   // Handle escape key
   useEffect(() => {
@@ -28,24 +56,15 @@ export function EmailDialog({ isOpen, onClose, mode, onSubmit, serverError }: Em
 
     if (isOpen) {
       document.addEventListener('keydown', handleEscape)
-      // Prevent body scroll when dialog is open
-      document.body.style.overflow = 'hidden'
-      // Trigger animation
-      setIsAnimating(true)
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'unset'
     }
   }, [isOpen])
 
   const handleClose = () => {
-    setIsAnimating(false)
-    // Wait for animation to complete before closing
-    setTimeout(() => {
-      onClose()
-    }, 300)
+    onClose()
   }
 
   const handleBackdropClick = (e: React.MouseEvent) => {
@@ -54,7 +73,7 @@ export function EmailDialog({ isOpen, onClose, mode, onSubmit, serverError }: Em
     }
   }
 
-  if (!isOpen) return null
+  if (!isVisible) return null
 
   return (
     <>
