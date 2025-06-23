@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -26,6 +27,7 @@ export default function ForgotPasswordPage() {
   const [isSuccess, setIsSuccess] = useState(false)
   const [serverError, setServerError] = useState<string>("")
   const { t } = useTranslation()
+  const router = useRouter()
   
   const schema = createSchema(t)
   
@@ -65,6 +67,11 @@ export default function ForgotPasswordPage() {
     }
   }
 
+  const handleContinue = () => {
+    const email = getValues('email')
+    router.push(`/reset-password-otp?email=${encodeURIComponent(email)}`)
+  }
+
   if (isSuccess) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
@@ -83,12 +90,15 @@ export default function ForgotPasswordPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-muted-foreground">
-                {t('auth.resetEmailSent', { email: getValues('email') })}
+                {t('auth.resetCodeSent', { email: getValues('email') })}
               </p>
               <p className="text-sm text-muted-foreground">
                 {t('auth.checkSpam')}
               </p>
-              <Button asChild className="w-full">
+              <Button onClick={handleContinue} className="w-full">
+                {t('auth.continue')}
+              </Button>
+              <Button asChild variant="ghost" className="w-full">
                 <Link href="/auth">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   {t('auth.backToLogin')}
@@ -149,7 +159,7 @@ export default function ForgotPasswordPage() {
 
               <Button type="submit" className="w-full h-12 text-base font-medium" disabled={isLoading}>
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {t('auth.sendResetLink')}
+                {t('auth.sendResetCode')}
               </Button>
             </form>
           </CardContent>
