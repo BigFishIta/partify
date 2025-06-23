@@ -1,20 +1,26 @@
 "use client"
 
+import { useState } from 'react'
 import { useTheme } from '@/contexts/ThemeContext'
 import { Button } from '@/components/ui/button'
 import { Sun, Moon, Monitor } from 'lucide-react'
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
+  const [isRotating, setIsRotating] = useState(false)
 
   const cycleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark')
-    } else if (theme === 'dark') {
-      setTheme('system')
-    } else {
-      setTheme('light')
-    }
+    setIsRotating(true)
+    setTimeout(() => {
+      if (theme === 'light') {
+        setTheme('dark')
+      } else if (theme === 'dark') {
+        setTheme('system')
+      } else {
+        setTheme('light')
+      }
+      setTimeout(() => setIsRotating(false), 150)
+    }, 150)
   }
 
   const getIcon = () => {
@@ -35,7 +41,9 @@ export function ThemeToggle() {
       variant="outline"
       size="icon"
       onClick={cycleTheme}
-      className="rounded-full"
+      className={`rounded-full transition-all duration-300 ${
+        isRotating ? 'rotate-180' : 'rotate-0'
+      }`}
       aria-label="Toggle theme"
     >
       {getIcon()}

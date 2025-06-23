@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from 'react'
 import { useLocale } from '@/contexts/LocaleContext'
 import { Button } from '@/components/ui/button'
 import { Locale } from '@/lib/i18n'
@@ -30,9 +31,14 @@ const FlagIcon = ({ locale }: { locale: Locale }) => {
 
 export function LocaleSelector() {
   const { locale, setLocale } = useLocale()
+  const [isRotating, setIsRotating] = useState(false)
 
   const toggleLocale = () => {
-    setLocale(locale === 'en' ? 'it' : 'en')
+    setIsRotating(true)
+    setTimeout(() => {
+      setLocale(locale === 'en' ? 'it' : 'en')
+      setTimeout(() => setIsRotating(false), 150)
+    }, 150)
   }
 
   return (
@@ -40,7 +46,9 @@ export function LocaleSelector() {
       variant="outline"
       size="icon"
       onClick={toggleLocale}
-      className="rounded-full p-2 hover:scale-105 transition-transform"
+      className={`rounded-full p-2 hover:scale-105 transition-all duration-300 ${
+        isRotating ? 'rotate-180' : 'rotate-0'
+      }`}
       aria-label={`Switch to ${locale === 'en' ? 'Italian' : 'English'}`}
     >
       <FlagIcon locale={locale} />
