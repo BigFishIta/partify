@@ -1,19 +1,18 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { EmailPasswordForm } from "./EmailPasswordForm"
 import { SocialButton } from "./SocialButton"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { LocaleSelector } from "@/components/LocaleSelector"
 import { useTranslation } from "@/contexts/LocaleContext"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, ChevronUp } from "lucide-react"
+import { EmailDialog } from "./EmailDialog"
 
 export function AuthPage() {
   const [mode, setMode] = useState<"login" | "signup">("login")
   const [serverError, setServerError] = useState<string>("")
-  const [showEmailForm, setShowEmailForm] = useState(false)
+  const [showEmailDialog, setShowEmailDialog] = useState(false)
   const { t } = useTranslation()
 
   const handleSubmit = async (data: any) => {
@@ -108,32 +107,16 @@ export function AuthPage() {
             </div>
           </div>
 
-          {/* Email/Password Toggle */}
+          {/* Email/Password Button */}
           <div className="space-y-4">
             <Button
               type="button"
               variant="outline"
-              onClick={() => setShowEmailForm(!showEmailForm)}
-              className="w-full h-12 text-base font-medium justify-between"
+              onClick={() => setShowEmailDialog(true)}
+              className="w-full h-12 text-base font-medium"
             >
-              <span>{t('auth.continueWithEmail')}</span>
-              {showEmailForm ? (
-                <ChevronUp className="h-4 w-4" />
-              ) : (
-                <ChevronDown className="h-4 w-4" />
-              )}
+              {t('auth.continueWithEmail')}
             </Button>
-
-            {/* Collapsible Email Form */}
-            {showEmailForm && (
-              <div className="space-y-4 pt-2 border-t">
-                <EmailPasswordForm
-                  mode={mode}
-                  onSubmit={handleSubmit}
-                  serverError={serverError}
-                />
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -166,6 +149,15 @@ export function AuthPage() {
           <div className="absolute top-1/3 -right-8 w-8 h-8 bg-white/25 rounded-full backdrop-blur-sm"></div>
         </div>
       </div>
+
+      {/* Email Dialog */}
+      <EmailDialog
+        isOpen={showEmailDialog}
+        onClose={() => setShowEmailDialog(false)}
+        mode={mode}
+        onSubmit={handleSubmit}
+        serverError={serverError}
+      />
     </div>
   )
 }
