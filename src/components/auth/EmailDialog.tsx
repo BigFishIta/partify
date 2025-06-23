@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { EmailPasswordForm } from "./EmailPasswordForm"
 import { useTranslation } from "@/contexts/LocaleContext"
 import { X } from "lucide-react"
@@ -16,12 +16,13 @@ interface EmailDialogProps {
 
 export function EmailDialog({ isOpen, onClose, mode, onSubmit, serverError }: EmailDialogProps) {
   const { t } = useTranslation()
+  const [isAnimating, setIsAnimating] = useState(false)
 
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onClose()
+        handleClose()
       }
     }
 
@@ -29,13 +30,29 @@ export function EmailDialog({ isOpen, onClose, mode, onSubmit, serverError }: Em
       document.addEventListener('keydown', handleEscape)
       // Prevent body scroll when dialog is open
       document.body.style.overflow = 'hidden'
+      // Trigger animation
+      setIsAnimating(true)
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape)
       document.body.style.overflow = 'unset'
     }
-  }, [isOpen, onClose])
+  }, [isOpen])
+
+  const handleClose = () => {
+    setIsAnimating(false)
+    // Wait for animation to complete before closing
+    setTimeout(() => {
+      onClose()
+    }, 300)
+  }
+
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      handleClose()
+    }
+  }
 
   if (!isOpen) return null
 
@@ -44,23 +61,25 @@ export function EmailDialog({ isOpen, onClose, mode, onSubmit, serverError }: Em
       {/* Backdrop */}
       <div 
         className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity duration-300 ${
-          isOpen ? 'opacity-100' : 'opacity-0'
+          isAnimating ? 'opacity-100' : 'opacity-0'
         }`}
-        onClick={onClose}
+        onClick={handleBackdropClick}
       />
       
       {/* Dialog */}
       <div 
-        className={`fixed inset-x-0 bottom-0 z-50 bg-background rounded-t-3xl shadow-2xl transform transition-transform duration-500 ease-out ${
-          isOpen ? 'translate-y-0' : 'translate-y-full'
+        className={`fixed inset-x-0 bottom-0 z-50 bg-background rounded-t-3xl shadow-2xl border-t transform transition-all duration-500 ease-out ${
+          isAnimating ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
         }`}
         style={{
           maxHeight: '85vh',
+          willChange: 'transform, opacity'
         }}
       >
         {/* Handle bar */}
         <div className="flex justify-center pt-4 pb-2">
-          <div className="w-12 h-1 bg-muted-foreground/30 rounded-full"></div>
+          <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full cursor-pointer hover:bg-muted-foreground/50 transition-colors"
+               onClick={handleClose}></div>
         </div>
 
         {/* Header */}
@@ -76,20 +95,20 @@ export function EmailDialog({ isOpen, onClose, mode, onSubmit, serverError }: Em
           <Button
             variant="ghost"
             size="icon"
-            onClick={onClose}
-            className="rounded-full"
+            onClick={handleClose}
+            className="rounded-full hover:bg-muted/50 transition-colors"
           >
             <X className="h-5 w-5" />
           </Button>
         </div>
 
         {/* Content */}
-        <div className="px-6 py-6 overflow-y-auto" style={{ maxHeight: 'calc(85vh - 120px)' }}>
+        <div className="px-6 py-6 overflow-y-auto" style={{ maxHeight: 'calc(85vh - 140px)' }}>
           <EmailPasswordForm
             mode={mode}
             onSubmit={async (data) => {
               await onSubmit(data)
-              onClose()
+              handleClose()
             }}
             serverError={serverError}
           />
