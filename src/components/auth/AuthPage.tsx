@@ -101,34 +101,19 @@ export function AuthPage() {
           </div>
 
           {/* Circular Icon Buttons */}
-          <div className="space-y-6 mb-6">
-            <div className="flex justify-center gap-6">
-              <SocialButton provider="google" variant="circular" />
-              <SocialButton provider="facebook" variant="circular" />
-              <Button
-                type="button"
-                variant="outline"
-                size="icon"
-                onClick={() => setShowEmailDialog(true)}
-                className="w-16 h-16 rounded-full border-2 hover:scale-105 transition-all duration-200 hover:border-primary hover:bg-primary/5"
-                aria-label={t('auth.continueWithEmail')}
-              >
-                <Mail className="h-6 w-6" />
-              </Button>
-            </div>
-            
-            {/* Labels */}
-            <div className="flex justify-center gap-6">
-              <div className="w-16 text-center">
-                <span className="text-xs text-muted-foreground">Google</span>
-              </div>
-              <div className="w-16 text-center">
-                <span className="text-xs text-muted-foreground">Facebook</span>
-              </div>
-              <div className="w-16 text-center">
-                <span className="text-xs text-muted-foreground">{t('auth.email')}</span>
-              </div>
-            </div>
+          <div className="flex justify-center gap-6 mb-6">
+            <SocialButton provider="google" variant="circular" />
+            <SocialButton provider="facebook" variant="circular" />
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              onClick={() => setShowEmailDialog(true)}
+              className="w-16 h-16 rounded-full border-2 hover:scale-105 transition-all duration-200 hover:border-primary hover:bg-primary/5"
+              aria-label={t('auth.continueWithEmail')}
+            >
+              <Mail className="h-6 w-6" />
+            </Button>
           </div>
         </div>
       </div>
