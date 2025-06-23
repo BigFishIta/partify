@@ -11,6 +11,15 @@ export const translations = {
     'auth.email': 'Email',
     'auth.password': 'Password',
     'auth.confirmPassword': 'Confirm Password',
+    'auth.forgotPassword': 'Forgot password?',
+    'auth.resetPassword': 'Reset Password',
+    'auth.resetPasswordDescription': 'Enter your email address and we\'ll send you a link to reset your password.',
+    'auth.sendResetLink': 'Send Reset Link',
+    'auth.checkEmail': 'Check your email',
+    'auth.resetEmailSent': 'We\'ve sent a password reset link to {email}',
+    'auth.checkSpam': 'Don\'t forget to check your spam folder.',
+    'auth.backToLogin': 'Back to login',
+    'auth.enterEmail': 'Enter your email address',
     'auth.continueWith': 'or continue with',
     'auth.noAccount': "Don't have an account? Sign up",
     'auth.hasAccount': 'Already have an account? Sign in',
@@ -28,6 +37,7 @@ export const translations = {
     
     // Errors
     'error.authFailed': 'Authentication failed',
+    'error.resetFailed': 'Password reset failed',
     'error.unexpected': 'An unexpected error occurred. Please try again.',
   },
   it: {
@@ -37,6 +47,15 @@ export const translations = {
     'auth.email': 'Email',
     'auth.password': 'Password',
     'auth.confirmPassword': 'Conferma Password',
+    'auth.forgotPassword': 'Password dimenticata?',
+    'auth.resetPassword': 'Reimposta Password',
+    'auth.resetPasswordDescription': 'Inserisci il tuo indirizzo email e ti invieremo un link per reimpostare la password.',
+    'auth.sendResetLink': 'Invia Link di Reset',
+    'auth.checkEmail': 'Controlla la tua email',
+    'auth.resetEmailSent': 'Abbiamo inviato un link per reimpostare la password a {email}',
+    'auth.checkSpam': 'Non dimenticare di controllare la cartella spam.',
+    'auth.backToLogin': 'Torna al login',
+    'auth.enterEmail': 'Inserisci il tuo indirizzo email',
     'auth.continueWith': 'o continua con',
     'auth.noAccount': 'Non hai un account? Registrati',
     'auth.hasAccount': 'Hai già un account? Accedi',
@@ -54,6 +73,7 @@ export const translations = {
     
     // Errors
     'error.authFailed': 'Autenticazione fallita',
+    'error.resetFailed': 'Reset password fallito',
     'error.unexpected': 'Si è verificato un errore imprevisto. Riprova.',
   }
 } as const

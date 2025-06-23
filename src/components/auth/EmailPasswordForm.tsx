@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Loader2, Mail, Lock, Eye, EyeOff } from "lucide-react"
 import { useTranslation } from "@/contexts/LocaleContext"
+import Link from "next/link"
 
 const createSchema = (mode: "login" | "signup", t: (key: string, params?: any) => string) => {
   const baseSchema = {
@@ -95,9 +96,19 @@ export function EmailPasswordForm({ mode, onSubmit, serverError }: EmailPassword
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="password" className="text-sm font-medium text-foreground">
-          {t('auth.password')}
-        </label>
+        <div className="flex items-center justify-between">
+          <label htmlFor="password" className="text-sm font-medium text-foreground">
+            {t('auth.password')}
+          </label>
+          {mode === "login" && (
+            <Link 
+              href="/forgot-password" 
+              className="text-sm text-primary hover:text-primary/80 underline-offset-4 hover:underline"
+            >
+              {t('auth.forgotPassword')}
+            </Link>
+          )}
+        </div>
         <div className="relative">
           <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
