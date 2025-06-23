@@ -74,7 +74,7 @@ export function AuthForm({ mode }: AuthFormProps) {
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex justify-center gap-4">
               <SocialButton provider="google" />
               <SocialButton provider="facebook" />
             </div>
