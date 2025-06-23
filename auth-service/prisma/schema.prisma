@@ -1,0 +1,35 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String?                // null per social login
+  name        String?
+  provider    AuthProvider @default(CREDENTIALS)
+  providerId  String?   @unique
+  locale      String   @default("en")
+  timezone    String   @default("UTC")
+  createdAt   DateTime @default(now())
+  sessions    Session[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  refreshToken String   @unique
+  expiresAt    DateTime
+}
+
+enum AuthProvider {
+  CREDENTIALS
+  GOOGLE
+  FACEBOOK
+}
