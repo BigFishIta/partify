@@ -63,77 +63,51 @@ export function AuthPage() {
             </div>
           </div>
 
-          {/* Welcome section */}
+          {/* Welcome section - Always show login */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">
-              {mode === "login" ? t('auth.welcomeBack') : t('auth.createAccountTitle')}
+              {t('auth.welcomeBack')}
             </h1>
             <p className="text-muted-foreground">
-              {mode === "login" 
-                ? t('auth.welcomeBackDescription')
-                : t('auth.createAccountDescription')
-              }
+              {t('auth.welcomeBackDescription')}
             </p>
           </div>
 
-          {/* Enhanced Toggle buttons */}
-          <div className="relative mb-8">
-            {/* Background container with gradient border */}
-            <div className="relative p-1 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 rounded-2xl">
-              <div className="bg-background rounded-xl p-1">
-                <div className="flex relative">
-                  {/* Sliding background indicator */}
-                  <div 
-                    className={`absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-primary to-primary/90 rounded-lg shadow-lg transition-all duration-300 ease-out ${
-                      mode === "login" ? "left-0" : "left-1/2"
-                    }`}
-                  />
-                  
-                  {/* Login button */}
-                  <button
-                    onClick={() => setMode("login")}
-                    className={`relative flex-1 py-3 px-6 rounded-lg text-sm font-semibold transition-all duration-300 ease-out ${
-                      mode === "login"
-                        ? "text-white shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    <span className="relative z-10">{t('auth.signin')}</span>
-                  </button>
-                  
-                  {/* Signup button */}
-                  <button
-                    onClick={() => setMode("signup")}
-                    className={`relative flex-1 py-3 px-6 rounded-lg text-sm font-semibold transition-all duration-300 ease-out ${
-                      mode === "signup"
-                        ? "text-white shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    <span className="relative z-10">{t('auth.signup')}</span>
-                  </button>
-                </div>
-              </div>
+          {/* Social Login Buttons */}
+          <div className="space-y-4 mb-6">
+            <div className="grid grid-cols-2 gap-4">
+              <SocialButton provider="google" variant="primary" />
+              <SocialButton provider="facebook" variant="primary" />
             </div>
-            
-            {/* Subtle glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-2xl blur-xl -z-10 opacity-50" />
           </div>
 
-          {/* Circular Icon Buttons */}
-          <div className="flex justify-center gap-6 mb-6">
-            <SocialButton provider="google" variant="circular" />
-            <SocialButton provider="facebook" variant="circular" />
+          {/* Email Login Button */}
+          <div className="space-y-4 mb-6">
             <Button
               type="button"
               variant="outline"
-              size="icon"
               onClick={() => setShowEmailDialog(true)}
-              className="w-16 h-16 rounded-full border-2 hover:scale-105 transition-all duration-200 hover:border-primary hover:bg-primary/5"
-              aria-label={t('auth.continueWithEmail')}
+              className="w-full h-12 text-base font-medium justify-center gap-3 hover:bg-accent/50 transition-all duration-200"
             >
-              <Mail className="h-8 w-8" />
+              <Mail className="h-5 w-5" />
+              <span>{t('auth.continueWithEmail')}</span>
             </Button>
+          </div>
+
+          {/* Sign up link */}
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">
+              {t('auth.noAccount').split('?')[0]}?{' '}
+              <button
+                onClick={() => {
+                  setMode("signup")
+                  setShowEmailDialog(true)
+                }}
+                className="text-primary hover:text-primary/80 underline-offset-4 hover:underline font-medium transition-colors"
+              >
+                {t('auth.signup')}
+              </button>
+            </p>
           </div>
         </div>
       </div>
