@@ -18,7 +18,7 @@ export function AuthPage() {
   const { t } = useTranslation()
   const router = useRouter()
 
-  const handleSubmit = async (data: any): Promise<boolean> => {
+  const handleSubmit = async (data: any): Promise<{ success: boolean; needsVerification?: boolean; email?: string }> => {
     setServerError("")
     
     try {
@@ -35,18 +35,28 @@ export function AuthPage() {
       if (response.ok) {
         const result = await response.json()
         console.log("Authentication successful:", result)
-        // Use client-side navigation for better UX
+        
+        // Check if this is a signup that needs email verification
+        if (mode === "signup" && result.needsVerification) {
+          return { 
+            success: true, 
+            needsVerification: true, 
+            email: data.email 
+          }
+        }
+        
+        // Login successful or signup without verification needed
         router.push("/dashboard")
-        return true
+        return { success: true }
       } else {
         const error = await response.json()
         setServerError(error.message || t('error.authFailed'))
-        return false
+        return { success: false }
       }
     } catch (error) {
       setServerError(t('error.unexpected'))
       console.error("Authentication error:", error)
-      return false
+      return { success: false }
     }
   }
 

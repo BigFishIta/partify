@@ -5,13 +5,14 @@ import { EmailPasswordForm } from "./EmailPasswordForm"
 import { useTranslation } from "@/contexts/LocaleContext"
 import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { EmailVerificationDialog } from "./EmailVerificationDialog"
 
 interface EmailDialogProps {
   isOpen: boolean
   onClose: () => void
   mode: "login" | "signup"
   onModeChange: (mode: "login" | "signup") => void
-  onSubmit: (data: any) => Promise<boolean>
+  onSubmit: (data: any) => Promise<{ success: boolean; needsVerification?: boolean; email?: string }>
   serverError?: string
 }
 
@@ -19,25 +20,22 @@ export function EmailDialog({ isOpen, onClose, mode, onModeChange, onSubmit, ser
   const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
+  const [showVerificationDialog, setShowVerificationDialog] = useState(false)
+  const [verificationEmail, setVerificationEmail] = useState("")
 
   // Handle dialog opening and closing
   useEffect(() => {
     if (isOpen) {
-      // Show dialog immediately
       setIsVisible(true)
-      // Prevent body scroll
       document.body.style.overflow = 'hidden'
       
-      // Trigger animation after a small delay to ensure DOM is ready
       const timer = setTimeout(() => {
         setIsAnimating(true)
       }, 10)
       
       return () => clearTimeout(timer)
     } else {
-      // Start closing animation
       setIsAnimating(false)
-      // Hide dialog after animation completes (aligned with CSS transition duration)
       const timer = setTimeout(() => {
         setIsVisible(false)
         document.body.style.overflow = 'unset'
@@ -79,10 +77,38 @@ export function EmailDialog({ isOpen, onClose, mode, onModeChange, onSubmit, ser
   }
 
   const handleFormSubmit = async (data: any) => {
-    const success = await onSubmit(data)
-    // Only close dialog if authentication was successful
-    if (success) {
-      handleClose()
+    const result = await onSubmit(data)
+    
+    if (result.success) {
+      if (result.needsVerification && result.email) {
+        // Show verification dialog instead of closing
+        setVerificationEmail(result.email)
+        setShowVerificationDialog(true)
+        handleClose() // Close the email dialog
+      } else {
+        // Login successful, close dialog
+        handleClose()
+      }
+    }
+    // If not successful, keep dialog open for error correction
+  }
+
+  const handleResendVerificationEmail = async () => {
+    try {
+      const response = await fetch("/api/auth/resend-verification", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: verificationEmail }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to resend verification email")
+      }
+    } catch (error) {
+      console.error("Resend verification email error:", error)
+      throw error
     }
   }
 
@@ -90,7 +116,7 @@ export function EmailDialog({ isOpen, onClose, mode, onModeChange, onSubmit, ser
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Main Email Dialog */}
       <div 
         className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity duration-300 ${
           isAnimating ? 'opacity-100' : 'opacity-0'
@@ -98,7 +124,6 @@ export function EmailDialog({ isOpen, onClose, mode, onModeChange, onSubmit, ser
         onClick={handleBackdropClick}
       />
       
-      {/* Dialog */}
       <div 
         className={`fixed inset-x-0 bottom-0 z-50 bg-background rounded-t-3xl shadow-2xl border-t transform transition-all duration-500 ease-out ${
           isAnimating ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
@@ -170,6 +195,14 @@ export function EmailDialog({ isOpen, onClose, mode, onModeChange, onSubmit, ser
           </p>
         </div>
       </div>
+
+      {/* Email Verification Dialog */}
+      <EmailVerificationDialog
+        isOpen={showVerificationDialog}
+        onClose={() => setShowVerificationDialog(false)}
+        email={verificationEmail}
+        onResendEmail={handleResendVerificationEmail}
+      />
     </>
   )
 }

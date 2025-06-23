@@ -41,6 +41,22 @@ export const translations = {
     'auth.hasAccount': 'Already have an account? Sign in',
     'auth.signinWith': 'Sign in with {provider}',
     
+    // Email Verification
+    'auth.verifyEmail': 'Verify Your Email',
+    'auth.checkYourInbox': 'We sent you a verification link',
+    'auth.verificationSent': 'Verification Email Sent!',
+    'auth.verificationSentDescription': 'We\'ve sent a verification link to {email}. Please check your inbox and click the link to activate your account.',
+    'auth.nextSteps': 'What\'s next?',
+    'auth.step1CheckEmail': 'Check your email inbox (and spam folder)',
+    'auth.step2ClickLink': 'Click the verification link in the email',
+    'auth.step3StartUsing': 'Start using Partify!',
+    'auth.didntReceiveEmail': 'Didn\'t receive the email?',
+    'auth.resendEmail': 'Resend Email',
+    'auth.resendEmailIn': 'Resend email in {seconds}s',
+    'auth.sending': 'Sending...',
+    'auth.checkSpamFolder': 'Make sure to check your spam or junk folder if you don\'t see the email in your inbox.',
+    'auth.continueToLogin': 'Continue to Login',
+    
     // Common
     'common.welcome': 'Welcome to Partify',
     'common.getStarted': 'Get started by signing in to your account or creating a new one.',
@@ -101,6 +117,22 @@ export const translations = {
     'auth.noAccount': 'Non hai un account? Registrati',
     'auth.hasAccount': 'Hai già un account? Accedi',
     'auth.signinWith': 'Accedi con {provider}',
+    
+    // Email Verification
+    'auth.verifyEmail': 'Verifica la Tua Email',
+    'auth.checkYourInbox': 'Ti abbiamo inviato un link di verifica',
+    'auth.verificationSent': 'Email di Verifica Inviata!',
+    'auth.verificationSentDescription': 'Abbiamo inviato un link di verifica a {email}. Controlla la tua casella di posta e clicca sul link per attivare il tuo account.',
+    'auth.nextSteps': 'Cosa fare ora?',
+    'auth.step1CheckEmail': 'Controlla la tua casella di posta (e la cartella spam)',
+    'auth.step2ClickLink': 'Clicca sul link di verifica nell\'email',
+    'auth.step3StartUsing': 'Inizia a usare Partify!',
+    'auth.didntReceiveEmail': 'Non hai ricevuto l\'email?',
+    'auth.resendEmail': 'Reinvia Email',
+    'auth.resendEmailIn': 'Reinvia email tra {seconds}s',
+    'auth.sending': 'Invio in corso...',
+    'auth.checkSpamFolder': 'Assicurati di controllare la cartella spam o posta indesiderata se non vedi l\'email nella tua casella di posta.',
+    'auth.continueToLogin': 'Continua al Login',
     
     // Common
     'common.welcome': 'Benvenuto su Partify',
