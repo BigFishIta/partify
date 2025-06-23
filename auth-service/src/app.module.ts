@@ -1,16 +1,41 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { APP_FILTER } from '@nestjs/core';
 
-import { AuthModule } from './auth/auth.module';      // <── aggiungi
+import { ConfigModule } from '@nestjs/config';
+import { envSchema } from './common/config/env.validation';            // ⬅️ nuovo
+
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter'; // ⬅️ nuovo
+
 import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule }   from './auth/auth.module';
+
+import { AppController } from './app.controller';
+import { AppService }    from './app.service';
+import { LoggerModule } from './common/logger/logger.module';
 
 @Module({
   imports: [
+    /* 1️⃣  Config globale con validazione Joi */
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: envSchema,
+      cache: true,
+    }),
+
+    /* 2️⃣  Moduli applicativi */
+    LoggerModule,
     PrismaModule,
-    AuthModule           // <── aggiungi qui
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+
+    /* 3️⃣  Filtro globale per uniformare gli errori */
+    {
+      provide : APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+  ],
 })
 export class AppModule {}
