@@ -5,6 +5,8 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { EmailPasswordForm } from "./EmailPasswordForm"
 import { SocialButton } from "./SocialButton"
+import { ThemeToggle } from "@/components/ThemeToggle"
+import { LocaleSelector } from "@/components/LocaleSelector"
 
 interface AuthFormProps {
   mode: "login" | "signup"
@@ -52,6 +54,11 @@ export function AuthForm({ mode }: AuthFormProps) {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
+        <div className="flex justify-between items-center mb-4">
+          <ThemeToggle />
+          <LocaleSelector />
+        </div>
+        
         <Card className="shadow-lg rounded-lg">
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-center">{title}</CardTitle>
