@@ -76,28 +76,48 @@ export function AuthPage() {
             </p>
           </div>
 
-          {/* Toggle buttons */}
-          <div className="flex bg-muted rounded-lg p-1 mb-8">
-            <button
-              onClick={() => setMode("login")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
-                mode === "login"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {t('auth.signin')}
-            </button>
-            <button
-              onClick={() => setMode("signup")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
-                mode === "signup"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {t('auth.signup')}
-            </button>
+          {/* Enhanced Toggle buttons */}
+          <div className="relative mb-8">
+            {/* Background container with gradient border */}
+            <div className="relative p-1 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 rounded-2xl">
+              <div className="bg-background rounded-xl p-1">
+                <div className="flex relative">
+                  {/* Sliding background indicator */}
+                  <div 
+                    className={`absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-primary to-primary/90 rounded-lg shadow-lg transition-all duration-300 ease-out ${
+                      mode === "login" ? "left-0" : "left-1/2"
+                    }`}
+                  />
+                  
+                  {/* Login button */}
+                  <button
+                    onClick={() => setMode("login")}
+                    className={`relative flex-1 py-3 px-6 rounded-lg text-sm font-semibold transition-all duration-300 ease-out ${
+                      mode === "login"
+                        ? "text-white shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <span className="relative z-10">{t('auth.signin')}</span>
+                  </button>
+                  
+                  {/* Signup button */}
+                  <button
+                    onClick={() => setMode("signup")}
+                    className={`relative flex-1 py-3 px-6 rounded-lg text-sm font-semibold transition-all duration-300 ease-out ${
+                      mode === "signup"
+                        ? "text-white shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <span className="relative z-10">{t('auth.signup')}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            {/* Subtle glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-2xl blur-xl -z-10 opacity-50" />
           </div>
 
           {/* Circular Icon Buttons */}
