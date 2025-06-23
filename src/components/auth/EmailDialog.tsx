@@ -11,7 +11,7 @@ interface EmailDialogProps {
   onClose: () => void
   mode: "login" | "signup"
   onModeChange: (mode: "login" | "signup") => void
-  onSubmit: (data: any) => Promise<void>
+  onSubmit: (data: any) => Promise<boolean>
   serverError?: string
 }
 
@@ -37,11 +37,11 @@ export function EmailDialog({ isOpen, onClose, mode, onModeChange, onSubmit, ser
     } else {
       // Start closing animation
       setIsAnimating(false)
-      // Hide dialog after animation completes
+      // Hide dialog after animation completes (aligned with CSS transition duration)
       const timer = setTimeout(() => {
         setIsVisible(false)
         document.body.style.overflow = 'unset'
-      }, 300)
+      }, 500)
       
       return () => clearTimeout(timer)
     }
@@ -76,6 +76,14 @@ export function EmailDialog({ isOpen, onClose, mode, onModeChange, onSubmit, ser
 
   const handleModeSwitch = () => {
     onModeChange(mode === "login" ? "signup" : "login")
+  }
+
+  const handleFormSubmit = async (data: any) => {
+    const success = await onSubmit(data)
+    // Only close dialog if authentication was successful
+    if (success) {
+      handleClose()
+    }
   }
 
   if (!isVisible) return null
@@ -130,10 +138,7 @@ export function EmailDialog({ isOpen, onClose, mode, onModeChange, onSubmit, ser
         <div className="px-6 py-6 overflow-y-auto" style={{ maxHeight: 'calc(85vh - 140px)' }}>
           <EmailPasswordForm
             mode={mode}
-            onSubmit={async (data) => {
-              await onSubmit(data)
-              handleClose()
-            }}
+            onSubmit={handleFormSubmit}
             serverError={serverError}
           />
         </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { EmailPasswordForm } from "./EmailPasswordForm"
 import { SocialButton } from "./SocialButton"
 import { ThemeToggle } from "@/components/ThemeToggle"
@@ -15,8 +16,9 @@ export function AuthPage() {
   const [serverError, setServerError] = useState<string>("")
   const [showEmailDialog, setShowEmailDialog] = useState(false)
   const { t } = useTranslation()
+  const router = useRouter()
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: any): Promise<boolean> => {
     setServerError("")
     
     try {
@@ -33,14 +35,18 @@ export function AuthPage() {
       if (response.ok) {
         const result = await response.json()
         console.log("Authentication successful:", result)
-        window.location.href = "/dashboard"
+        // Use client-side navigation for better UX
+        router.push("/dashboard")
+        return true
       } else {
         const error = await response.json()
         setServerError(error.message || t('error.authFailed'))
+        return false
       }
     } catch (error) {
       setServerError(t('error.unexpected'))
       console.error("Authentication error:", error)
+      return false
     }
   }
 
