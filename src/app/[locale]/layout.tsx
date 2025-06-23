@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
+import { Geist, Geist_Mono } from "next/font/google";
 import "../../globals.css";
 
 const geistSans = Geist({
@@ -14,26 +13,26 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Partify",
   description: "Authentication system with Next.js and shadcn/ui",
 };
 
 export default async function LocaleLayout({
   children,
-  params: { locale }
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
   unstable_setRequestLocale(locale);
+  
   const messages = (await import(`@/i18n/${locale}/common.json`)).default;
-
+  
   return (
     <html lang={locale}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
