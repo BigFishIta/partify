@@ -73,37 +73,35 @@ export function AuthPage() {
             </p>
           </div>
 
-          {/* Social Login Buttons - Now circular */}
+          {/* All Login Buttons - Now all circular and aligned */}
           <div className="space-y-6 mb-8">
             <div className="flex justify-center gap-6">
               <SocialButton provider="google" variant="circular" />
               <SocialButton provider="facebook" variant="circular" />
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={() => setShowEmailDialog(true)}
+                className="w-16 h-16 rounded-full border-2 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl hover:border-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 hover:shadow-gray-200 dark:hover:shadow-gray-800"
+                aria-label={t('auth.continueWithEmail')}
+              >
+                <Mail className="h-7 w-7 text-muted-foreground" />
+              </Button>
             </div>
-          </div>
-
-          {/* Divider */}
-          <div className="relative my-8">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-muted" />
+            
+            {/* Labels under buttons */}
+            <div className="flex justify-center gap-6">
+              <div className="w-16 text-center">
+                <span className="text-xs text-muted-foreground font-medium">Google</span>
+              </div>
+              <div className="w-16 text-center">
+                <span className="text-xs text-muted-foreground font-medium">Facebook</span>
+              </div>
+              <div className="w-16 text-center">
+                <span className="text-xs text-muted-foreground font-medium">Email</span>
+              </div>
             </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-4 text-muted-foreground font-medium">
-                {t('auth.continueWith')}
-              </span>
-            </div>
-          </div>
-
-          {/* Email Login Button */}
-          <div className="space-y-4 mb-6">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setShowEmailDialog(true)}
-              className="w-full h-12 text-base font-medium justify-center gap-3 hover:bg-accent/50 transition-all duration-200"
-            >
-              <Mail className="h-5 w-5" />
-              <span>{t('auth.continueWithEmail')}</span>
-            </Button>
           </div>
 
           {/* Sign up link */}
