@@ -121,13 +121,6 @@ export function AuthPage() {
               <SocialButton provider="facebook" />
             </div>
           </div>
-
-          {/* Footer text */}
-          <div className="mt-8 text-center text-sm text-muted-foreground">
-            Join the millions of smart investors who trust us to manage their finances. 
-            Log in to access your personalized dashboard, track your portfolio performance, 
-            and make informed investment decisions.
-          </div>
         </div>
       </div>
 
