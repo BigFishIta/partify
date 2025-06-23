@@ -8,6 +8,7 @@ import { LocaleSelector } from "@/components/LocaleSelector"
 import { useTranslation } from "@/contexts/LocaleContext"
 import { Button } from "@/components/ui/button"
 import { EmailDialog } from "./EmailDialog"
+import { Mail } from "lucide-react"
 
 export function AuthPage() {
   const [mode, setMode] = useState<"login" | "signup">("login")
@@ -99,24 +100,35 @@ export function AuthPage() {
             </button>
           </div>
 
-          {/* Primary Social Login */}
-          <div className="space-y-4 mb-6">
-            <div className="grid grid-cols-2 gap-4">
-              <SocialButton provider="google" variant="primary" />
-              <SocialButton provider="facebook" variant="primary" />
+          {/* Circular Icon Buttons */}
+          <div className="space-y-6 mb-6">
+            <div className="flex justify-center gap-6">
+              <SocialButton provider="google" variant="circular" />
+              <SocialButton provider="facebook" variant="circular" />
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={() => setShowEmailDialog(true)}
+                className="w-16 h-16 rounded-full border-2 hover:scale-105 transition-all duration-200 hover:border-primary hover:bg-primary/5"
+                aria-label={t('auth.continueWithEmail')}
+              >
+                <Mail className="h-6 w-6" />
+              </Button>
             </div>
-          </div>
-
-          {/* Email/Password Button */}
-          <div className="space-y-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setShowEmailDialog(true)}
-              className="w-full h-12 text-base font-medium"
-            >
-              {t('auth.continueWithEmail')}
-            </Button>
+            
+            {/* Labels */}
+            <div className="flex justify-center gap-6">
+              <div className="w-16 text-center">
+                <span className="text-xs text-muted-foreground">Google</span>
+              </div>
+              <div className="w-16 text-center">
+                <span className="text-xs text-muted-foreground">Facebook</span>
+              </div>
+              <div className="w-16 text-center">
+                <span className="text-xs text-muted-foreground">{t('auth.email')}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
