@@ -74,7 +74,7 @@ export function AuthPage() {
           </div>
 
           {/* All Login Buttons - Now all circular and aligned */}
-          <div className="space-y-6 mb-8">
+          <div className="space-y-6">
             <div className="flex justify-center gap-6">
               <SocialButton provider="google" variant="circular" />
               <SocialButton provider="facebook" variant="circular" />
@@ -102,22 +102,6 @@ export function AuthPage() {
                 <span className="text-xs text-muted-foreground font-medium">Email</span>
               </div>
             </div>
-          </div>
-
-          {/* Sign up link */}
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground">
-              {t('auth.noAccount').split('?')[0]}?{' '}
-              <button
-                onClick={() => {
-                  setMode("signup")
-                  setShowEmailDialog(true)
-                }}
-                className="text-primary hover:text-primary/80 underline-offset-4 hover:underline font-medium transition-colors"
-              >
-                {t('auth.signup')}
-              </button>
-            </p>
           </div>
         </div>
       </div>
