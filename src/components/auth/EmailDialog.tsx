@@ -10,11 +10,12 @@ interface EmailDialogProps {
   isOpen: boolean
   onClose: () => void
   mode: "login" | "signup"
+  onModeChange: (mode: "login" | "signup") => void
   onSubmit: (data: any) => Promise<void>
   serverError?: string
 }
 
-export function EmailDialog({ isOpen, onClose, mode, onSubmit, serverError }: EmailDialogProps) {
+export function EmailDialog({ isOpen, onClose, mode, onModeChange, onSubmit, serverError }: EmailDialogProps) {
   const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
@@ -71,6 +72,10 @@ export function EmailDialog({ isOpen, onClose, mode, onSubmit, serverError }: Em
     if (e.target === e.currentTarget) {
       handleClose()
     }
+  }
+
+  const handleModeSwitch = () => {
+    onModeChange(mode === "login" ? "signup" : "login")
   }
 
   if (!isVisible) return null
@@ -136,7 +141,27 @@ export function EmailDialog({ isOpen, onClose, mode, onSubmit, serverError }: Em
         {/* Footer with alternative action */}
         <div className="px-6 py-4 border-t bg-muted/30">
           <p className="text-center text-sm text-muted-foreground">
-            {mode === "login" ? t('auth.noAccount') : t('auth.hasAccount')}
+            {mode === "login" ? (
+              <>
+                {t('auth.noAccount').split('?')[0]}?{' '}
+                <button
+                  onClick={handleModeSwitch}
+                  className="text-primary hover:text-primary/80 underline-offset-4 hover:underline font-medium"
+                >
+                  {t('auth.signup')}
+                </button>
+              </>
+            ) : (
+              <>
+                {t('auth.hasAccount').split('?')[0]}?{' '}
+                <button
+                  onClick={handleModeSwitch}
+                  className="text-primary hover:text-primary/80 underline-offset-4 hover:underline font-medium"
+                >
+                  {t('auth.signin')}
+                </button>
+              </>
+            )}
           </p>
         </div>
       </div>

@@ -152,6 +152,7 @@ export function AuthPage() {
         isOpen={showEmailDialog}
         onClose={() => setShowEmailDialog(false)}
         mode={mode}
+        onModeChange={setMode}
         onSubmit={handleSubmit}
         serverError={serverError}
       />
