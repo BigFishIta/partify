@@ -105,9 +105,9 @@ export function SocialButton({ provider, variant = "icon", className }: SocialBu
         aria-label={t('auth.signinWith', { provider: providerName })}
       >
         {isLoading ? (
-          <Loader2 className="h-6 w-6 animate-spin" />
+          <Loader2 className="h-8 w-8 animate-spin" />
         ) : (
-          <Icon size="w-6 h-6" />
+          <Icon size="w-8 h-8" />
         )}
       </Button>
     )

@@ -112,7 +112,7 @@ export function AuthPage() {
               className="w-16 h-16 rounded-full border-2 hover:scale-105 transition-all duration-200 hover:border-primary hover:bg-primary/5"
               aria-label={t('auth.continueWithEmail')}
             >
-              <Mail className="h-6 w-6" />
+              <Mail className="h-8 w-8" />
             </Button>
           </div>
         </div>
