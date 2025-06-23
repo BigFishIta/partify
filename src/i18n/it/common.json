@@ -1,0 +1,12 @@
+{
+  "login": "Accedi",
+  "signup": "Crea account",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Conferma Password",
+  "welcome": "Benvenuto su Partify",
+  "getStarted": "Inizia accedendo al tuo account o creandone uno nuovo.",
+  "dontHaveAccount": "Non hai un account? Registrati",
+  "alreadyHaveAccount": "Hai già un account? Accedi",
+  "orContinueWith": "o continua con"
+}
