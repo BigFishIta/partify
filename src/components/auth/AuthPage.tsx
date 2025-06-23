@@ -73,11 +73,23 @@ export function AuthPage() {
             </p>
           </div>
 
-          {/* Social Login Buttons */}
-          <div className="space-y-4 mb-6">
-            <div className="grid grid-cols-2 gap-4">
-              <SocialButton provider="google" variant="primary" />
-              <SocialButton provider="facebook" variant="primary" />
+          {/* Social Login Buttons - Now circular */}
+          <div className="space-y-6 mb-8">
+            <div className="flex justify-center gap-6">
+              <SocialButton provider="google" variant="circular" />
+              <SocialButton provider="facebook" variant="circular" />
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-muted" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-4 text-muted-foreground font-medium">
+                {t('auth.continueWith')}
+              </span>
             </div>
           </div>
 

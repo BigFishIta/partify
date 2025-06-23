@@ -95,9 +95,9 @@ export function SocialButton({ provider, variant = "icon", className }: SocialBu
         variant="outline"
         size="icon"
         className={cn(
-          "w-16 h-16 rounded-full border-2 hover:scale-105 transition-all duration-200",
-          provider === "google" && "hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950",
-          provider === "facebook" && "hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950",
+          "w-16 h-16 rounded-full border-2 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl",
+          provider === "google" && "hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950 hover:shadow-blue-200 dark:hover:shadow-blue-900",
+          provider === "facebook" && "hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 hover:shadow-blue-200 dark:hover:shadow-blue-900",
           className
         )}
         onClick={handleSocialAuth}
@@ -105,9 +105,9 @@ export function SocialButton({ provider, variant = "icon", className }: SocialBu
         aria-label={t('auth.signinWith', { provider: providerName })}
       >
         {isLoading ? (
-          <Loader2 className="h-8 w-8 animate-spin" />
+          <Loader2 className="h-7 w-7 animate-spin" />
         ) : (
-          <Icon size="w-8 h-8" />
+          <Icon size="w-7 h-7" />
         )}
       </Button>
     )
