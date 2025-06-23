@@ -12,12 +12,15 @@ model User {
   email       String   @unique
   password    String?                // null per social login
   name        String?
+  emailVerified Boolean  @default(false)   
   provider    AuthProvider @default(CREDENTIALS)
   providerId  String?   @unique
   locale      String   @default("en")
   timezone    String   @default("UTC")
   createdAt   DateTime @default(now())
   sessions    Session[]
+  roles    UserRole[]
+  emailTokens EmailVerification[]
 }
 
 model Session {
@@ -26,6 +29,34 @@ model Session {
   userId       String
   refreshToken String   @unique
   expiresAt    DateTime
+}
+
+
+
+model Role {
+  id    String     @id @default(cuid())
+  name  String     @unique
+  users UserRole[]
+}
+
+model UserRole {
+  userId String
+  roleId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])      // PK composta
+  }
+
+  model EmailVerification {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([tokenHash])
 }
 
 enum AuthProvider {

@@ -10,11 +10,13 @@ import { jwtConstants } from './jwt.constants';   // <── aggiungi
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { PrismaModule } from '../prisma/prisma.module'; // già esistente
+import { MailModule } from '../mail/mail.module';
 
 @Module({
   imports: [
     PrismaModule,
     PassportModule,
+    MailModule,
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '5m' }
